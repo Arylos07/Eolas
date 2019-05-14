@@ -3291,6 +3291,13 @@ MonoBehaviour:
     projectPath: 
     editDate: 
     editorName: 
+    items:
+    - itemName: 
+      itemID: 0
+      categories: []
+      imageData: 
+      description: 
+      recipes: []
   openOrCreateText: {fileID: 2089749346}
   openOrCreateButton: {fileID: 1703473078}
   createProjectText: {fileID: 1902459182}
