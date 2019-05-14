@@ -1,0 +1,173 @@
+﻿#region copyright
+// Author: Michael Cox 2019 for Eolas. 
+// All code made available open-source at https://github.com/Arylos07/Eolas
+// Eolas is protected by Creative Commons CC BY-NC-SA 4.0 (https://creativecommons.org/licenses/by-nc-sa/4.0/)
+// You may use Eolas for commercial projects, however recompiling and distribution of Eolas for commercial use
+// is not allowed without the exclusive permission from the author.
+//------------------------------
+#endregion
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System.IO;
+using System;
+using Crosstales.FB;
+
+public class MainMenu : MonoBehaviour
+{
+    public static MainMenu instance;
+    public Project selectedProject = null;
+
+    [Header("UI")]
+    public Text openOrCreateText;
+    public Button openOrCreateButton;
+    public Text createProjectText;
+    public InputField projectNameField;
+    public InputField editorNameField;
+    public InputField projectPathField;
+    public Transform projectsScrollView;
+    public InputField currentEditorName;
+
+    [Header("Panels")]
+    public GameObject projectsPanel;
+    public GameObject buttonsPanel;
+    public GameObject creationPanel;
+
+    [Header("Project properties")]
+    public string projectName;
+    public string editorName;
+    public string projectPath;
+
+    [Header("Prefabs")]
+    public GameObject projectButton;
+
+    private void Start()
+    {
+        projectPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Eolas\\Projects";
+        projectPathField.text = projectPath;
+        ProjectManager.InitDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Eolas\\Projects");
+        ProjectManager.LoadConfig();
+        currentEditorName.text = ProjectManager.editorName;
+        instance = this;
+    }
+
+    public void ShowProjectButtons()
+    {
+        foreach (GameObject button in GameObject.FindGameObjectsWithTag("ProjectButton"))
+        {
+            Destroy(button);
+        }
+
+        foreach(Project project in ProjectManager.projects)
+        {
+            ProjectButton button = Instantiate(projectButton, projectsScrollView).GetComponent<ProjectButton>();
+
+            button.project = project;
+            button.Display();
+        }
+    }
+
+    public void OpenDirectory(string path)
+    {
+        path = path.Replace(@"/", @"\");   // explorer doesn't like front slashes
+        System.Diagnostics.Process.Start("explorer.exe", "/select," + path);
+    }
+
+    public void OpenOrCreateProject()
+    {
+        if(selectedProject == null || selectedProject.projectName == string.Empty)
+        {
+            ToggleCreationPanel();
+        }
+        else
+        {
+            //Load project
+        }
+    }
+
+    public void ToggleCreationPanel()
+    {
+        projectsPanel.SetActive(!projectsPanel.activeSelf);
+        creationPanel.SetActive(!creationPanel.activeSelf);
+
+        selectedProject = null;
+
+        ShowProjectButtons();
+    }
+
+    public void LoadProject()
+    {
+        string path = FileBrowser.OpenSingleFile("eolas");
+
+        if (path != string.Empty)
+        {
+            selectedProject = ProjectManager.LoadProjectFile(path);
+        }
+    }
+
+    public void CreateNewProject()
+    {
+        ProjectManager.SaveNewProject(projectName, editorName, projectPath);
+        currentEditorName.text = editorName;
+    }
+
+    public void SelectDirectory()
+    {
+        string path = FileBrowser.OpenSingleFolder();
+
+        if (path != string.Empty)
+        {
+            projectPath = path;
+            projectPathField.text = path;
+        }
+    }
+
+    public void ToggleProjectsWindow()
+    {
+        projectsPanel.SetActive(!projectsPanel.activeSelf);
+        buttonsPanel.SetActive(!buttonsPanel.activeSelf);
+
+        selectedProject = null;
+
+        ShowProjectButtons();
+    }
+
+    public void SaveConfig()
+    {
+        ProjectManager.editorName = currentEditorName.text;
+        ProjectManager.SaveConfig();
+    }
+
+    private void Update()
+    {
+        if(creationPanel.activeSelf == true)
+        {
+            projectName = projectNameField.text;
+            editorName = editorNameField.text;
+            projectPathField.text = projectPath;
+        }
+
+        if (selectedProject == null || selectedProject.projectName == string.Empty)
+        {
+            openOrCreateText.text = "Create New Project";
+        }
+        else if (selectedProject != null || selectedProject.projectName != string.Empty)
+        {
+            openOrCreateText.text = "Open " + selectedProject.projectName;
+
+            openOrCreateButton.interactable = !(currentEditorName.text == string.Empty);
+            ProjectManager.editorName = currentEditorName.text;
+        }
+
+        if(ProjectManager.projects.Count == 0)
+        {
+            createProjectText.text = "No projects found. Load or create a new project";
+        }
+        else
+        {
+            createProjectText.text = string.Empty;
+        }
+    }
+}
