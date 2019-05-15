@@ -22,7 +22,7 @@ public class Project
 
     public List<Item> items = new List<Item>();
 
-    public List<object> defaultStats = new List<object>();
+    public List<Stat> defaultStats = new List<Stat>();
 
     public Project()
     {
@@ -49,56 +49,29 @@ public class Item
     public List<string> categories = new List<string>();
     public byte[] imageData = null;
     public string description;
-    public List<object> stats = new List<object>();
-    public List<object> otherStats = new List<object>();
-    public List<Recipes> recipes = new List<Recipes>();
+    public List<Stat> stats = new List<Stat>();
+    public List<Stat> otherStats = new List<Stat>();
+    public List<Recipe> recipes = new List<Recipe>();
 
 }
 
 [Serializable]
-public class StringProperty
+public class Stat
 {
     public string name;
-    public string property;
+    public string value;
 }
 
 [Serializable]
-public class IntProperty
-{
-    public string name;
-    public int property;
-}
-
-[Serializable]
-public class FloatProperty
-{
-    public string name;
-    public float property;
-}
-
-[Serializable]
-public class BoolProperty
-{
-    public string name;
-    public bool property;
-}
-
-[Serializable]
-public class HeaderProperty
-{
-    public string header;
-}
-
-[Serializable]
-public class Recipes
+public class Recipe
 {
     public string skill;
-    public List<RecipeIngredients> ingredients = new List<RecipeIngredients>();
+    public List<RecipeIngredient> ingredients = new List<RecipeIngredient>();
     public string notes;
 }
 
 [Serializable]
-public class RecipeIngredients
+public class RecipeIngredient
 {
     public Item item;
     public int amount;

@@ -34,28 +34,11 @@ public class ItemCreation : MonoBehaviour
 
     [Header("Templates")]
     public GameObject headerTemplate;
-    public GameObject boolTemplate;
-    public GameObject intTemplate;
-    public GameObject floatTemplate;
-    public GameObject stringTemplate;
+    public GameObject fieldTemplate;
 
     public void Start()
     {
-        HeaderProperty h = new HeaderProperty();
-        h.header = "Test";
-        defaultStats.Add(h);
 
-        foreach (object defaultField in defaultStats)
-        {
-            if(defaultField.GetType() == (typeof(HeaderProperty)))
-            {
-                StatType type = Instantiate(headerTemplate, scrollView).GetComponent<StatType>();
-                HeaderProperty header = (HeaderProperty)defaultField;
-                type.name = header.header;
-
-                newItem.stats.Add(header);
-            }
-        }
     }
 
 
