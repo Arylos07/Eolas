@@ -22,6 +22,8 @@ public class Project
 
     public List<Item> items = new List<Item>();
 
+    public List<object> defaultStats = new List<object>();
+
     public Project()
     {
         projectName = string.Empty;
@@ -45,11 +47,12 @@ public class Item
     public string itemName;
     public int itemID = -1;
     public List<string> categories = new List<string>();
-    public byte[] imageData;
+    public byte[] imageData = null;
     public string description;
     public List<object> stats = new List<object>();
     public List<object> otherStats = new List<object>();
     public List<Recipes> recipes = new List<Recipes>();
+
 }
 
 [Serializable]
@@ -78,6 +81,12 @@ public class BoolProperty
 {
     public string name;
     public bool property;
+}
+
+[Serializable]
+public class HeaderProperty
+{
+    public string header;
 }
 
 [Serializable]

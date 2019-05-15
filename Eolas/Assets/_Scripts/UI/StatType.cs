@@ -11,31 +11,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.ObjectModel;
 
-public class LoadingManager : MonoBehaviour
+public class StatType : MonoBehaviour
 {
-    public static Project openProject;
-
-    [Header("Loading UI")]
-    public GameObject loadingPanel;
-    public Text loadingText;
-
-    [Header("Prefabs")]
-    public GameObject itemPrefab;
-
-    [Space(10)]
-    public Transform itemList;
+    public Text statName;
+    public InputField statInput;
+    public string statType;
+    public Item item;
+    public int statIndex;
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach(Item item in openProject.items)
-        {
-            ItemButton itemButton = Instantiate(itemPrefab, itemList).GetComponent<ItemButton>();
 
-            itemButton.item = item;
-        }
     }
 
     // Update is called once per frame
