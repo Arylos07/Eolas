@@ -20,7 +20,8 @@ public class ItemCreation : MonoBehaviour
     private Item newItem = new Item();
     public string[] allowedImageFiles;
 
-    public List<object> defaultStats = new List<object>();
+    public List<Stat> newStats = new List<Stat>();
+    public static ItemCreation instance;
 
     [Header("UI")]
     public InputField itemName;
@@ -31,6 +32,7 @@ public class ItemCreation : MonoBehaviour
     public InputField catagory;
     public InputField description;
     public Transform scrollView;
+    public GameObject addPanel;
 
     [Header("Templates")]
     public GameObject headerTemplate;
@@ -38,7 +40,145 @@ public class ItemCreation : MonoBehaviour
 
     public void Start()
     {
+        instance = this;
+        RefreshStats();
+    }
 
+    public void ToggleAdd()
+    {
+        addPanel.SetActive(!addPanel.activeSelf);
+    }
+
+    public void AddField(bool header)
+    {
+        if(header == true)
+        {
+            Stat headerStat = new Stat("header", "Header");
+
+            newStats.Add(headerStat);
+
+            RefreshStats();
+        }
+        else if(header == false)
+        {
+            Stat valueStat = new Stat("Stat Name", "Value");
+
+            newStats.Add(valueStat);
+
+            RefreshStats();
+        }
+    }
+
+    public void RevertStatsToDefault()
+    {
+        newStats.Clear();
+
+        foreach(Stat defaultStat in LoadingManager.openProject.defaultStats)
+        {
+            newStats.Add(defaultStat);
+        }
+    }
+
+    public void SaveAsDefaultStats()
+    {
+        LoadingManager.openProject.defaultStats.Clear();
+
+        foreach(Stat newDefault in newStats)
+        {
+            LoadingManager.openProject.defaultStats.Add(newDefault);
+        }
+    }
+
+    public void ClearStats()
+    {
+        foreach (GameObject stat in GameObject.FindGameObjectsWithTag("StatType"))
+        {
+            Destroy(stat);
+        }
+    }
+
+    public void RefreshStats()
+    {
+        if (addPanel.activeSelf == true)
+            ToggleAdd();
+
+        foreach (GameObject stat in GameObject.FindGameObjectsWithTag("StatType"))
+        {
+            StatType statType = stat.GetComponent<StatType>();
+
+            Stat statStage = new Stat();
+
+            if (statType.statName != null)
+            {
+                statStage = new Stat(statType.statName.text, statType.statValue.text);
+            }
+            else
+            {
+                statStage = new Stat("header", statType.statValue.text);
+            }
+
+            newStats.Replace(statType.statIndex, statStage);
+
+            Destroy(stat);
+        }
+
+        int index = 0;
+
+        foreach (Stat stat in newStats)
+        {
+            if(stat.name.ToLower() == "header")
+            {
+                StatType field = Instantiate(headerTemplate, scrollView).GetComponent<StatType>();
+
+                field.name = stat.name;
+                field.statValue.text = stat.value;
+                field.statIndex = index;
+            }
+            else
+            {
+                StatType field = Instantiate(fieldTemplate, scrollView).GetComponent<StatType>();
+
+                field.name = stat.name;
+                field.statName.text = stat.name;
+                field.statValue.text = stat.value;
+                field.statIndex = index;
+
+            }
+            index++;
+        }
+    }
+
+    public void RefreshStats(bool saveStats)
+    {
+        if (addPanel.activeSelf == true)
+            ToggleAdd();
+
+        ClearStats();
+
+        int index = 0;
+
+        foreach (Stat stat in newStats)
+        {
+            if (stat.name.ToLower() == "header")
+            {
+                StatType field = Instantiate(headerTemplate, scrollView).GetComponent<StatType>();
+
+                field.name = stat.name;
+                field.statValue.text = stat.value;
+                field.statIndex = index;
+            }
+            else
+            {
+                StatType field = Instantiate(fieldTemplate, scrollView).GetComponent<StatType>();
+
+                field.name = stat.name;
+                field.statName.text = stat.name;
+                field.statValue.text = stat.value;
+                field.statIndex = index;
+
+            }
+            index++;
+        }
     }
 
 

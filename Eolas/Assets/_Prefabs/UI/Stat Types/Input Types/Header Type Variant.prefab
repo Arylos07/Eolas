@@ -118,7 +118,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 302845686}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -3197052271208554055}
+        m_MethodName: Move
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: up
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &315088725
@@ -318,7 +329,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 473035557}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -3197052271208554055}
+        m_MethodName: Move
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: '-'
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &474419033
@@ -899,9 +921,46 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2013621031}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -3197052271208554055}
+        m_MethodName: Move
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: down
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &-3197052271208554055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2659781696153766468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 438262b83b27e6d43a28d45ecb483bca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statName: {fileID: 0}
+  statValue: {fileID: 474419035}
+  item:
+    itemName: 
+    itemID: -1
+    categories: []
+    imageData: 
+    description: 
+    stats: []
+    otherStats: []
+    recipes: []
+  statIndex: 0
+  upButton: {fileID: 302845685}
+  downButton: {fileID: 2013621030}
 --- !u!1001 &4591649828366253366
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -912,7 +971,7 @@ PrefabInstance:
     - target: {fileID: 1968530900867364722, guid: be33ee0ddbfd8794a90e4e60a377c791,
         type: 3}
       propertyPath: m_Name
-      value: Header Type
+      value: Header Type Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1968530900867364733, guid: be33ee0ddbfd8794a90e4e60a377c791,
         type: 3}
@@ -1029,6 +1088,12 @@ PrefabInstance:
 --- !u!224 &2659781696153766475 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1968530900867364733, guid: be33ee0ddbfd8794a90e4e60a377c791,
+    type: 3}
+  m_PrefabInstance: {fileID: 4591649828366253366}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2659781696153766468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1968530900867364722, guid: be33ee0ddbfd8794a90e4e60a377c791,
     type: 3}
   m_PrefabInstance: {fileID: 4591649828366253366}
   m_PrefabAsset: {fileID: 0}

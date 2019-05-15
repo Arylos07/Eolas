@@ -14,21 +14,43 @@ using UnityEngine.UI;
 
 public class StatType : MonoBehaviour
 {
-    public Text statName;
-    public InputField statInput;
-    public string statType;
+    public InputField statName;
+    public InputField statValue;
     public Item item;
     public int statIndex;
+
+    [Header("Buttons")]
+    public Button upButton;
+    public Button downButton;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        if(statIndex == 0)
+        {
+            upButton.interactable = false;
+        }
+        else if(statIndex == ItemCreation.instance.newStats.Count - 1)
+        {
+            downButton.interactable = false;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Move(string value)
     {
-        
+        if(value == "up")
+        {
+            ItemCreation.instance.newStats.Move(statIndex, statIndex - 1);
+        }
+        else if(value == "down")
+        {
+            ItemCreation.instance.newStats.Move(statIndex, statIndex + 1);
+        }
+        else if(value == "-")
+        {
+            ItemCreation.instance.newStats.RemoveAt(statIndex);
+        }
+
+        ItemCreation.instance.RefreshStats(false);
     }
 }

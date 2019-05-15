@@ -60,6 +60,19 @@ public class Stat
 {
     public string name;
     public string value;
+
+    public Stat(string statName, string statValue)
+    {
+        name = statName;
+        value = statValue;
+    }
+
+    public Stat()
+    {
+        name = string.Empty;
+        value = string.Empty;
+    }
+
 }
 
 [Serializable]

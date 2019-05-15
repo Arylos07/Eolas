@@ -19,4 +19,10 @@ public static class ListExtensions
         list.RemoveAt(oldIndex);
         list.Insert(newIndex, item);
     }
+
+    public static void Replace<T>(this List<T> list, int index, T item)
+    {
+        list.RemoveAt(index);
+        list.Insert(index, item);
+    }
 }
