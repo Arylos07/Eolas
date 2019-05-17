@@ -20,7 +20,13 @@ public class LoadingManager : MonoBehaviour
 {
     public static Project openProject;
     public static string editorName;
-    FileStream projectFile;
+    public static FileStream projectFile;
+
+    public static bool madeChanges = false;
+    public static LoadingManager instance;
+
+    //used for reverting project to original version
+    public Project currentSave;
 
     [Header("Managers")]
     public DataManager dataManager;
@@ -30,17 +36,143 @@ public class LoadingManager : MonoBehaviour
     public GameObject loadingPanel;
     public Text loadingText;
 
+    [Space(10)]
+    public GameObject progressBarParent;
+    public Image loadingBar;
+
+    public GameObject confirmClose;
+    public GameObject confirmQuit;
+
     [Header("Prefabs")]
     public GameObject itemPrefab;
 
     [Space(10)]
     public Transform itemList;
 
+    private int close = -1;     // -1 disabled, 0 don't close, 1 don't save and close, 2 save and close
+
     // Start is called before the first frame update
     void Start()
     {
+        madeChanges = false;
+        instance = this;
         StartCoroutine(LoadProject());
-        print("start");
+    }
+
+    private void Update()
+    {
+        if(madeChanges == true)
+        {
+            dataManager.projectTitle.text = openProject.projectName + "*";
+        }
+        else if(madeChanges == false)
+        {
+            dataManager.projectTitle.text = openProject.projectName;
+        }
+    }
+
+    //public void OnApplicationQuit()
+    //{
+    //    if(close == -1)
+    //    {
+    //        StartCoroutine(_CloseEolas());
+    //    }
+    //    else
+    //    {
+    //        //just quit
+    //    }
+    //}
+
+    IEnumerator _CloseEolas()
+    {
+        close = -1;
+        confirmClose.SetActive(true);
+
+        while (close == -1)
+        {
+            yield return null;
+        }
+
+        if (close == 2)
+        {
+            // save and close Eolas
+        }
+        else if (close == 1)
+        {
+            //discard and close
+            projectFile.Close();
+            Application.Quit();
+        }
+        else if (close == 0)
+        {
+            //cancel
+        }
+    }
+
+    public void CloseProject()
+    {
+        StartCoroutine(_CloseProject());
+    }
+
+    IEnumerator _CloseProject()
+    {
+        close = -1;
+        confirmClose.SetActive(true);
+        
+        while(close == -1)
+        {
+            yield return null;
+        }
+
+        if(close == 2)
+        {
+            // save and close
+        }
+        else if(close == 1)
+        {
+            //discard and close
+            projectFile.Close();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        }
+        else if (close == 0)
+        {
+            //cancel
+        }
+        close = -1;
+    }
+
+    public void ConfirmClose(bool confirm)
+    {
+        if (confirm == true)
+        {
+            close = 1;
+        }
+        else
+        {
+            close = 0;
+        }
+    }
+
+    public static void UpdateItems()
+    {
+        instance._UpdateItems();
+    }
+
+    public void _UpdateItems()
+    {
+        foreach(GameObject oldButton in GameObject.FindGameObjectsWithTag("ItemButton"))
+        {
+            Destroy(oldButton);
+        }
+
+        madeChanges = true;
+
+        foreach (Item item in openProject.items)
+        {
+            ItemButton itemButton = Instantiate(itemPrefab, itemList).GetComponent<ItemButton>();
+
+            itemButton.item = item;
+        }
     }
 
     IEnumerator LoadProject()
@@ -48,7 +180,8 @@ public class LoadingManager : MonoBehaviour
         //delays are to allow any other behaviours time to reference anything from this function as well as display to user the progress of loading.
 
         loadingText.text = "Loading Project " + openProject.projectName + "...";
-        projectFile = new FileStream(openProject.projectPath, FileMode.Open, FileAccess.Read, FileShare.None);    //lock file to prevent corruption
+        projectFile = new FileStream(openProject.projectPath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);    //lock file to prevent corruption
+        currentSave = openProject;
         dataManager.projectTitle.text = openProject.projectName;
         yield return new WaitForSeconds(1);
 
@@ -57,23 +190,36 @@ public class LoadingManager : MonoBehaviour
         dataManager.editor = editorName;
         yield return new WaitForSeconds(2);
 
-        loadingText.text = "Fetching items...";
-        yield return new WaitForSeconds(0.5f);
-
-        int i = 0;
-        foreach (Item item in openProject.items)
+        if (openProject.items.Count != 0)
         {
-            i++;
-            loadingText.text = "Loading item " + i + "/" + openProject.items.Count + "...";
-            ItemButton itemButton = Instantiate(itemPrefab, itemList).GetComponent<ItemButton>();
+            loadingText.text = "Fetching items...";
+            yield return new WaitForSeconds(0.5f);
 
-            itemButton.item = item;
-            yield return null;
+            progressBarParent.SetActive(true);
+
+            int i = 0;
+            foreach (Item item in openProject.items)
+            {
+                i++;
+                loadingText.text = "Loading item " + i + "/" + openProject.items.Count + "...";
+                ItemButton itemButton = Instantiate(itemPrefab, itemList).GetComponent<ItemButton>();
+
+                itemButton.item = item;
+
+                loadingBar.fillAmount = ((float)i / (float)openProject.items.Count);
+
+                yield return null;
+            }
         }
 
         loadingText.text = "Finishing up...";
         itemCreation.imagePath.text = openProject.projectPath;
         yield return new WaitForSeconds(1);
         loadingPanel.SetActive(false);
+    }
+
+    public static void RequestSave()
+    {
+        ProjectManager.SaveProject(openProject, projectFile);
     }
 }

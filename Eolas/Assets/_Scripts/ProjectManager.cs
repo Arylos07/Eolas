@@ -52,6 +52,17 @@ public class ProjectManager : MonoBehaviour
         fStream.Close();
     }
 
+    public static void SaveProject(Project project, FileStream projectStream)
+    {
+        BinaryFormatter binary = new BinaryFormatter();
+
+        project.editDate = DateTime.UtcNow.ToString();
+        project.editorName = editorName;
+
+        binary.Serialize(projectStream, project);
+        LoadingManager.madeChanges = false;
+    }
+
     public static void SaveNewProject(string projectName, string projectEditor, string projectPath)
     {
         //Load binary coding and create a file to write to.

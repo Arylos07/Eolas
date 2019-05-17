@@ -69,7 +69,7 @@ public class ItemCreation : MonoBehaviour
 
         newItem.description = description.text;
         dataManager.CreateItem(newItem);
-        //DataManager.RefreshItems();
+        LoadingManager.UpdateItems();
         RefreshFields();
         gameObject.SetActive(false);
     }

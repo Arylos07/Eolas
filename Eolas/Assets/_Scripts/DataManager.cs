@@ -30,4 +30,16 @@ public class DataManager : MonoBehaviour
     {
         LoadingManager.openProject.items.Add(newItem);
     }
+
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKey(KeyCode.F5))
+#else
+     if((Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl)) && Input.GetKeyDown(KeyCode.S))
+#endif
+        {
+            LoadingManager.RequestSave();
+        }
+    }
 }
