@@ -14,6 +14,7 @@ using UnityEngine.UI;
 using System.IO;
 using Crosstales.FB;
 using System;
+using System.Linq;
 
 public class ItemCreation : MonoBehaviour
 {
@@ -23,13 +24,16 @@ public class ItemCreation : MonoBehaviour
     public List<Stat> newStats = new List<Stat>();
     public static ItemCreation instance;
 
+    [Header("Managers")]
+    public LoadingManager loadingManager;
+    public DataManager dataManager;
+
     [Header("UI")]
     public InputField itemName;
     public InputField itemID;
     public Image itemImage;
     public InputField imagePath;
-    public Text catagories;
-    public InputField catagory;
+    public InputField catagories;
     public InputField description;
     public Transform scrollView;
     public GameObject addPanel;
@@ -44,9 +48,41 @@ public class ItemCreation : MonoBehaviour
         RefreshStats();
     }
 
+    //toggles the add stat panel
     public void ToggleAdd()
     {
         addPanel.SetActive(!addPanel.activeSelf);
+    }
+
+    public void CreateItem()
+    {
+        newItem.itemName = itemName.text;
+        newItem.itemID = itemID.text;
+
+        string[] cat = catagories.text.Split(',');
+
+        for (int i = 0; i < cat.Length; ++i)
+        {
+            cat[i] = cat[i].Trim();
+        }
+        newItem.categories = cat.ToList();
+
+        newItem.description = description.text;
+        dataManager.CreateItem(newItem);
+        //DataManager.RefreshItems();
+        RefreshFields();
+        gameObject.SetActive(false);
+    }
+
+    public void RefreshFields()
+    {
+        itemName.text = string.Empty;
+        itemID.text = string.Empty;
+        catagories.text = string.Empty;
+        description.text = string.Empty;
+        imagePath.text = string.Empty;
+        newItem = new Item();
+        RevertStatsToDefault();
     }
 
     public void AddField(bool header)

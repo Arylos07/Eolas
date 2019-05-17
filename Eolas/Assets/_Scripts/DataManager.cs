@@ -16,7 +16,15 @@ public class DataManager : MonoBehaviour
 {
     [Header("UI")]
     public GameObject createItemPanel;
+    public Text projectTitle;
 
+    [Space(10)]
+    public string editor;
+
+    public void ToggleGameObject(GameObject toggleObject)
+    {
+        toggleObject.SetActive(!toggleObject.activeSelf);
+    }
 
     public void CreateItem(Item newItem)
     {

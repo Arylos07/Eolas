@@ -43,14 +43,31 @@ public class MainMenu : MonoBehaviour
     [Header("Prefabs")]
     public GameObject projectButton;
 
+    [Header("Log")]
+    public Transform messageLog;
+    public GameObject message;
+
+    public static void Exception(string error)
+    {
+        GameObject go = Instantiate(instance.message, instance.messageLog);
+        Text messageText = go.GetComponent<Text>();
+        messageText.color = Color.red;
+        messageText.text = error;
+    }
+
     private void Start()
     {
         projectPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Eolas\\Projects";
         projectPathField.text = projectPath;
         ProjectManager.InitDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Eolas\\Projects");
-        ProjectManager.LoadConfig();
-        currentEditorName.text = ProjectManager.editorName;
         instance = this;
+    }
+
+    public void OpenProject()
+    {
+        LoadingManager.openProject = selectedProject;
+        LoadingManager.editorName = editorName;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Data");
     }
 
     public void ShowProjectButtons()
@@ -83,7 +100,7 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            //Load project
+            OpenProject();
         }
     }
 
@@ -104,6 +121,8 @@ public class MainMenu : MonoBehaviour
         if (path != string.Empty)
         {
             selectedProject = ProjectManager.LoadProjectFile(path);
+            SaveConfig();
+            ShowProjectButtons();
         }
     }
 
@@ -126,12 +145,25 @@ public class MainMenu : MonoBehaviour
 
     public void ToggleProjectsWindow()
     {
+        if (projectsPanel.activeSelf == false)
+        {
+            ProjectManager.LoadConfig();
+            currentEditorName.text = ProjectManager.editorName;
+            ShowProjectButtons();
+        }
+        else
+        {
+            ProjectManager.projects.Clear();
+            foreach (GameObject button in GameObject.FindGameObjectsWithTag("ProjectButton"))
+            {
+                Destroy(button);
+            }
+        }
+
         projectsPanel.SetActive(!projectsPanel.activeSelf);
         buttonsPanel.SetActive(!buttonsPanel.activeSelf);
 
         selectedProject = null;
-
-        ShowProjectButtons();
     }
 
     public void SaveConfig()

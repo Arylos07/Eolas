@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ProjectButton
   - StatType
+  - ItemButton
   layers:
   - Default
   - TransparentFX

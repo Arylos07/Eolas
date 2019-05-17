@@ -45,7 +45,7 @@ public class Project
 public class Item
 {
     public string itemName;
-    public int itemID = -1;
+    public string itemID = string.Empty;
     public List<string> categories = new List<string>();
     public byte[] imageData = null;
     public string description;

@@ -18,6 +18,8 @@ public class ItemButton : MonoBehaviour
     [Header("UI")]
     public Text itemName;
     public Image itemImage;
+    public GameObject searchConditionsPanel;
+    public Text conditionText;
 
     private void Start()
     {

@@ -24,6 +24,7 @@ public class ProjectManager : MonoBehaviour
     public static string editDate;
     public static string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Eolas";
     public static List<string> projectPaths = new List<string>();
+    public static List<string> projectsNotFound = new List<string>();
 
     public static void SaveConfig()
     {
@@ -79,24 +80,44 @@ public class ProjectManager : MonoBehaviour
 
     public static Project LoadProjectFile(string path)
     {
-        //Load binary formatter and open the file. Decrypt the file and close it.
-        BinaryFormatter binary = new BinaryFormatter();
-        FileStream fStream = File.Open(path, FileMode.Open);
-        Project project = (Project)binary.Deserialize(fStream);
-        fStream.Close();
+        if (File.Exists(path))
+        {
+            //Load binary formatter and open the file. Decrypt the file and close it.
+            BinaryFormatter binary = new BinaryFormatter();
+            FileStream fStream = File.Open(path, FileMode.Open);
+            Project project = (Project)binary.Deserialize(fStream);
+            fStream.Close();
 
-        //Take decrypted variables and add them to the GameController so rules can be adjusted accordingly.
-        project.projectPath = path;
-        projects.Add(project);
+            //Take decrypted variables and add them to the GameController so rules can be adjusted accordingly.
+            project.projectPath = path;
+            projects.Add(project);
 
-        return project;
+            return project;
+        }
+        else
+        {
+            MainMenu.Exception("A project could not have been loaded. This file may have been moved or deleted.\nFile location: " + path);
+            projectsNotFound.Add(path);
+            return null;
+        }
     }
 
     public static void LoadProjectFile(List<string> paths)
     {
+        projectsNotFound.Clear();
         foreach (string path in paths)
         {
             LoadProjectFile(path);
+        }
+
+        if(projectsNotFound.Count != 0)
+        {
+            foreach(string path in projectsNotFound)
+            {
+                projectPaths.Remove(path);
+            }
+
+            SaveConfig();
         }
     }
 
