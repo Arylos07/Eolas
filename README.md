@@ -2,27 +2,27 @@
 
 A visual database for your data, from items in video games and inventory management, to recipes and account logs.
 
-##What is Eolas?
+## What is Eolas?
 Eolas, Gaelic for "knowledge", is a simple, but robust program that allows visual reading and storing of itemized lists. For example, a game developer can use Eolas to store item statistics in their games as well as requirements, descriptions, and crafting recipes. Eolas allows clean, and robust management of your data so everyone from artists and designers, to programmers can be on the same page. Goodbye spreadsheets!
 
-##What can I do with Eolas?
+## What can I do with Eolas?
 Eolas is written to be simple for everyone to understand, but with enough versatility to be used in practically any scenario. We are using Eolas to keep track of our items in our in-development MMO, but we have seen Eolas used for item inventory management, HR people logs, and even recipe books. You can then share your Eolas project with other users so they can easily read and write data.
 
-#Foreward before continuing
+# Foreward before continuing
 Eolas does not check for differences before reading and does not support merging. Because of this, if using Eolas in a development environment, we **strongly** suggest that you host your Eolas project on some flavour of Git, (Github, Atlassian, etc). This way, changes can be saved and merged easily, preventing file conflicts. If the project you are using Eolas for is on Git, we recommend putting the Eolas file in your project repository. 
 
 At a later date, we plan to add file locking to Eolas, so only certain users can make changes, useful to prevent accidental changes to your project.
 
-#Installation
+# Installation
 The Eolas executable is found under [the releases page](http://https://github.com/Arylos07/Eolas/releases "the releases page") where you will find installers for Eolas. Select your OS and install. Make sure to run the installers as administrator to associate Eolas projects with Eolas. 
 
-#Updating
+# Updating
 //currently testing pipeline
 
-#License
+# License
 Eolas is developed for open source use, however it is protected by Creative Commons and an MIT License. Eolas is free to modify, but cannot be redistributed for commercial use (you cannot sell Eolas).
 
-#Contribution
+# Contribution
 Eolas is released open source to allow developers, designers, and DevOps engineers tailor make Eolas to their needs. Instead of making Eolas for every possible scenario, we are releasing Eolas so you can make it work for your situation. 
 
 Eolas is made using C# and uses the [Unity engine](https://unity3d.com/) as its base and graphical interface. 
