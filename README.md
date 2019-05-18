@@ -17,7 +17,10 @@ At a later date, we plan to add file locking to Eolas, so only certain users can
 The Eolas executable is found under [the releases page](http://https://github.com/Arylos07/Eolas/releases "the releases page") where you will find installers for Eolas. Select your OS and install. Make sure to run the installers as administrator to associate Eolas projects with Eolas. 
 
 # Updating
-//currently testing pipeline
+Updating is simple. When a new version is released, Eolas will notify you. Simply download the new version from the releases page if you would like it and run the installer. The installer will then automatically update Eolas to the newest version.
+
+## Downgrading
+If the newest version isn't working for you for any reason, you are more than welcome to downgrade. Simply use the same process as updating to downgrade your version of Eolas.
 
 # License
 Eolas is developed for open source use, however it is protected by Creative Commons and an MIT License. Eolas is free to modify, but cannot be redistributed for commercial use (you cannot sell Eolas).
