@@ -15,7 +15,9 @@ using UnityEngine.UI;
 public class StatType : MonoBehaviour
 {
     public InputField statName;
+    public Text statNameText;
     public InputField statValue;
+    public Text statValueText;
     public Item item;
     public int statIndex;
 
@@ -26,13 +28,16 @@ public class StatType : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(statIndex == 0)
+        if (upButton != null && downButton != null)
         {
-            upButton.interactable = false;
-        }
-        else if(statIndex == ItemCreation.instance.newStats.Count - 1)
-        {
-            downButton.interactable = false;
+            if (statIndex == 0)
+            {
+                upButton.interactable = false;
+            }
+            else if (statIndex == ItemCreation.instance.newStats.Count - 1)
+            {
+                downButton.interactable = false;
+            }
         }
     }
 

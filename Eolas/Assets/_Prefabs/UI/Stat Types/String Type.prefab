@@ -275,6 +275,7 @@ GameObject:
   - component: {fileID: 4792202695840824296}
   - component: {fileID: 4792202695840824298}
   - component: {fileID: 4792202695840824297}
+  - component: {fileID: 272332805490571921}
   m_Layer: 5
   m_Name: String Type
   m_TagString: StatType
@@ -341,3 +342,30 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &272332805490571921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4792202695840824295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 438262b83b27e6d43a28d45ecb483bca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statName: {fileID: 0}
+  statNameText: {fileID: 4792202695297802226}
+  statValue: {fileID: 0}
+  statValueText: {fileID: 4792202695225132284}
+  item:
+    itemName: 
+    itemID: 
+    categories: []
+    imageData: 
+    description: 
+    stats: []
+    recipes: []
+  statIndex: 0
+  upButton: {fileID: 0}
+  downButton: {fileID: 0}

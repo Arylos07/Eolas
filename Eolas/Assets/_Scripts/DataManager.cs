@@ -31,6 +31,16 @@ public class DataManager : MonoBehaviour
         LoadingManager.openProject.items.Add(newItem);
     }
 
+    public void ReplaceItem(Item newVersion, int index)
+    {
+        LoadingManager.openProject.items.Replace(index, newVersion);
+    }
+
+    public int ItemIndex(Item item)
+    {
+        return LoadingManager.openProject.items.IndexOf(item);
+    }
+
     private void Update()
     {
 #if UNITY_EDITOR

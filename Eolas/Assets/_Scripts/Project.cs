@@ -51,7 +51,6 @@ public class Item
     public byte[] imageData = null;
     public string description;
     public List<Stat> stats = new List<Stat>();
-    public List<Stat> otherStats = new List<Stat>();
     public List<Recipe> recipes = new List<Recipe>();
 
 }

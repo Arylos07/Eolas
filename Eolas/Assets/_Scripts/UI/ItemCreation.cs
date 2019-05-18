@@ -20,6 +20,7 @@ public class ItemCreation : MonoBehaviour
 {
     private Item newItem = new Item();
     public string[] allowedImageFiles;
+    private int itemIndex = 0;      //index of item for editing
 
     public List<Stat> newStats = new List<Stat>();
     public static ItemCreation instance;
@@ -67,20 +68,128 @@ public class ItemCreation : MonoBehaviour
 
     public void CreateItem()
     {
+        if (itemIndex == -1)
+        {
+            newItem.itemName = itemName.text;
+            newItem.itemID = itemID.text;
+
+            if (catagories.text != string.Empty)
+            {
+                string[] cat = catagories.text.Split(',');
+
+                for (int i = 0; i < cat.Length; ++i)
+                {
+                    cat[i] = cat[i].Trim();
+                }
+                newItem.categories = cat.ToList();
+            }
+            else if (catagories.text == string.Empty)
+            {
+                newItem.categories.Clear();
+            }
+
+            newItem.stats.Clear();
+
+            foreach (GameObject statObject in GameObject.FindGameObjectsWithTag("StatType"))
+            {
+                StatType stat = statObject.GetComponent<StatType>();
+                if (stat.statName == null)
+                {
+                    newItem.stats.Add(new Stat("header", stat.statValue.text));
+                }
+                else
+                {
+                    newItem.stats.Add(new Stat(stat.statName.text, stat.statValue.text));
+                }
+            }
+
+            newItem.description = description.text;
+            dataManager.CreateItem(newItem);
+            LoadingManager.UpdateItems();
+            RefreshFields();
+            gameObject.SetActive(false);
+        }
+        else if(itemIndex != -1)
+        {
+            SubmitEdit();
+        }
+    }
+
+    public void EditItem(Item item, int index)
+    {
+        newItem = item;
+        itemIndex = index;
+
+        itemName.text = item.itemName;
+        itemID.text = item.itemID;
+
+        byte[] imageData = item.imageData;
+
+        Texture2D texture = new Texture2D(0, 0);
+        ImageConversion.LoadImage(texture, imageData);
+
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 300.0f);
+        itemImage.sprite = sprite;
+
+        string catagoryConstructor = string.Empty;
+        if (item.categories.Count != 0)
+        {
+            foreach (string catagory in item.categories)
+            {
+                catagoryConstructor += catagory + ", ";
+            }
+        }
+
+        catagories.text = catagoryConstructor;
+
+        description.text = item.description;
+
+        newStats = item.stats;
+
+        gameObject.SetActive(true);
+        RefreshStats(false);
+    }
+
+    public void SubmitEdit()
+    {
+        LoadingManager.openProject.items.Remove(newItem);
         newItem.itemName = itemName.text;
         newItem.itemID = itemID.text;
 
-        string[] cat = catagories.text.Split(',');
-
-        for (int i = 0; i < cat.Length; ++i)
+        if (catagories.text != string.Empty)
         {
-            cat[i] = cat[i].Trim();
+            string[] cat = catagories.text.Split(',');
+
+            for (int i = 0; i < cat.Length; ++i)
+            {
+                cat[i] = cat[i].Trim();
+            }
+            newItem.categories = cat.ToList();
         }
-        newItem.categories = cat.ToList();
+        else if (catagories.text == string.Empty)
+        {
+            newItem.categories.Clear();
+        }
+
+        newItem.stats.Clear();
+
+        foreach (GameObject statObject in GameObject.FindGameObjectsWithTag("StatType"))
+        {
+            StatType stat = statObject.GetComponent<StatType>();
+            if (stat.statName == null)
+            {
+                newItem.stats.Add(new Stat("header", stat.statValue.text));
+            }
+            else
+            {
+                newItem.stats.Add(new Stat(stat.statName.text, stat.statValue.text));
+            }
+        }
 
         newItem.description = description.text;
-        dataManager.CreateItem(newItem);
+        LoadingManager.openProject.items.Insert(itemIndex, newItem);
         LoadingManager.UpdateItems();
+        itemIndex = -1;
         RefreshFields();
         gameObject.SetActive(false);
     }

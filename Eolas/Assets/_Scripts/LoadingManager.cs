@@ -237,6 +237,7 @@ public class LoadingManager : MonoBehaviour
 
         loadingText.text = "Finishing up...";
         itemCreation.imagePath.text = openProject.projectPath;
+        itemCreation.gameObject.SetActive(false);
         yield return new WaitForSeconds(1);
         loadingPanel.SetActive(false);
     }
