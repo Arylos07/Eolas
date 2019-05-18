@@ -57,6 +57,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        ProjectManager.projects.Clear();
         projectPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Eolas\\Projects";
         projectPathField.text = projectPath;
         ProjectManager.InitDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Eolas\\Projects");
@@ -100,6 +101,10 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
+            if(selectedProject.eolasVersion != Application.version)
+            {
+                print("this project was made in a different version of Eolas than the opened version");
+            }
             OpenProject();
         }
     }

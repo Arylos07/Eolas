@@ -49,6 +49,8 @@ public class LoadingManager : MonoBehaviour
     [Space(10)]
     public Transform itemList;
 
+    // An int used as an enum to determine how the user wants unsaved changes handled.
+    // Could have used an enum here, but was too lazy at the time.
     private int close = -1;     // -1 disabled, 0 don't close, 1 don't save and close, 2 save and close
 
     // Start is called before the first frame update
@@ -85,27 +87,39 @@ public class LoadingManager : MonoBehaviour
 
     IEnumerator _CloseEolas()
     {
-        close = -1;
-        confirmClose.SetActive(true);
+        if (madeChanges == true)
+        {
+            close = -1;
+            confirmClose.SetActive(true);
 
-        while (close == -1)
-        {
-            yield return null;
-        }
+            while (close == -1)
+            {
+                yield return null;
+            }
 
-        if (close == 2)
-        {
-            // save and close Eolas
+            if (close == 2)
+            {
+                RequestSave();
+                projectFile.Close();
+                Application.Quit();
+            }
+            else if (close == 1)
+            {
+                //discard and close
+                projectFile.Close();
+                Application.Quit();
+            }
+            else if (close == 0)
+            {
+                //cancel
+                close = -1;
+                confirmClose.SetActive(false);
+            }
         }
-        else if (close == 1)
+        else
         {
-            //discard and close
             projectFile.Close();
             Application.Quit();
-        }
-        else if (close == 0)
-        {
-            //cancel
         }
     }
 
@@ -116,41 +130,50 @@ public class LoadingManager : MonoBehaviour
 
     IEnumerator _CloseProject()
     {
-        close = -1;
-        confirmClose.SetActive(true);
-        
-        while(close == -1)
+        if (madeChanges == true)
         {
-            yield return null;
+            close = -1;
+            confirmClose.SetActive(true);
+
+            while (close == -1)
+            {
+                yield return null;
+            }
+
+            if (close == 2)
+            {
+                //save and close
+                RequestSave();
+                projectFile.Close();
+                UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+            }
+            else if (close == 1)
+            {
+                //discard and close
+                projectFile.Close();
+                UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+            }
+            else if (close == 0)
+            {
+                //cancel
+                close = -1;
+                confirmClose.SetActive(false);
+            }
         }
 
-        if(close == 2)
+        else
         {
-            // save and close
-        }
-        else if(close == 1)
-        {
-            //discard and close
+            RequestSave();
             projectFile.Close();
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
         }
-        else if (close == 0)
-        {
-            //cancel
-        }
+
         close = -1;
     }
 
-    public void ConfirmClose(bool confirm)
+    public void ConfirmClose(int confirm)
     {
-        if (confirm == true)
-        {
-            close = 1;
-        }
-        else
-        {
-            close = 0;
-        }
+        close = confirm;
     }
 
     public static void UpdateItems()

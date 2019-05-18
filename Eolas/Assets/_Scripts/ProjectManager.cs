@@ -58,6 +58,7 @@ public class ProjectManager : MonoBehaviour
 
         project.editDate = DateTime.UtcNow.ToString();
         project.editorName = editorName;
+        project.eolasVersion = Application.version;
 
         binary.Serialize(projectStream, project);
         LoadingManager.madeChanges = false;
@@ -72,6 +73,7 @@ public class ProjectManager : MonoBehaviour
 
         //Create a copy of the SaveManager to get variables to save.
         Project project = new Project(projectName, formattedPath, DateTime.UtcNow.ToString(), projectEditor);
+        project.eolasVersion = Application.version;
 
         projects.Add(project);
         projectPaths.Add(project.projectPath);

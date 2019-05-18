@@ -19,6 +19,7 @@ public class Project
     public string projectPath;
     public string editDate;
     public string editorName;   //This should be changed out for Github name or other known name later on. 
+    public string eolasVersion;
 
     public List<Item> items = new List<Item>();
 

@@ -37,6 +37,7 @@ public class ItemCreation : MonoBehaviour
     public InputField description;
     public Transform scrollView;
     public GameObject addPanel;
+    public Button createButton;
 
     [Header("Templates")]
     public GameObject headerTemplate;
@@ -48,8 +49,18 @@ public class ItemCreation : MonoBehaviour
         RefreshStats();
     }
 
+    private void Update()
+    {
+        createButton.interactable = (itemName.text != string.Empty);
+    }
+
+    public void ToggleItemCreation()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+    }
+
     //toggles the add stat panel
-    public void ToggleAdd()
+    public void ToggleAddStat()
     {
         addPanel.SetActive(!addPanel.activeSelf);
     }
@@ -136,7 +147,7 @@ public class ItemCreation : MonoBehaviour
     public void RefreshStats()
     {
         if (addPanel.activeSelf == true)
-            ToggleAdd();
+            ToggleAddStat();
 
         foreach (GameObject stat in GameObject.FindGameObjectsWithTag("StatType"))
         {
@@ -187,7 +198,7 @@ public class ItemCreation : MonoBehaviour
     public void RefreshStats(bool saveStats)
     {
         if (addPanel.activeSelf == true)
-            ToggleAdd();
+            ToggleAddStat();
 
         ClearStats();
 
