@@ -3528,6 +3528,7 @@ GameObject:
   - component: {fileID: 556314961}
   - component: {fileID: 556314960}
   - component: {fileID: 556314959}
+  - component: {fileID: 556314962}
   m_Layer: 5
   m_Name: AddRecipe
   m_TagString: Untagged
@@ -3638,6 +3639,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556314957}
   m_CullTransparentMesh: 0
+--- !u!114 &556314962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556314957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6333f8918241eba42b3a75bec9005055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipPrefab: {fileID: 171736, guid: f234d5ec9358c46668b3c1b044ba66b8, type: 3}
+  text: "Crafting recipes will be introduced in a future version. \nTo add them yourself,
+    look to the contribution instructions in the repository."
 --- !u!1 &572053365
 GameObject:
   m_ObjectHideFlags: 0
@@ -5307,6 +5323,7 @@ GameObject:
   - component: {fileID: 895236779}
   - component: {fileID: 895236778}
   - component: {fileID: 895236777}
+  - component: {fileID: 895236780}
   m_Layer: 5
   m_Name: AddRecipe
   m_TagString: Untagged
@@ -5417,6 +5434,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895236775}
   m_CullTransparentMesh: 0
+--- !u!114 &895236780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895236775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6333f8918241eba42b3a75bec9005055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipPrefab: {fileID: 171736, guid: f234d5ec9358c46668b3c1b044ba66b8, type: 3}
+  text: "Crafting recipes will be introduced in a future version. \nTo add them yourself,
+    look to the contribution instructions in the repository."
 --- !u!1 &895569750
 GameObject:
   m_ObjectHideFlags: 0
@@ -8002,7 +8034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1380308809
 RectTransform:
   m_ObjectHideFlags: 0
