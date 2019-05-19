@@ -51,7 +51,7 @@ public class Item
     public byte[] imageData = null;
     public string description;
     public List<Stat> stats = new List<Stat>();
-    public List<Recipe> recipes = new List<Recipe>();
+    public Recipe recipe;
 
 }
 
@@ -79,6 +79,8 @@ public class Stat
 public class Recipe
 {
     public string skill;
+    public string level;
+    public string experience;
     public List<RecipeIngredient> ingredients = new List<RecipeIngredient>();
     public string notes;
 }
@@ -86,7 +88,7 @@ public class Recipe
 [Serializable]
 public class RecipeIngredient
 {
-    public Item item;
-    public int amount;
+    public string item;
+    public string amount;
     public string notes;
 }
