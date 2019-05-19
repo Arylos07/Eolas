@@ -10601,24 +10601,20 @@ MonoBehaviour:
   - png
   - jpg
   - jpeg
-  newStats:
-  - name: header
-    value: Header test
-  - name: fuk
-    value: me
-  - name: ur
-    value: mum
+  newStats: []
   loadingManager: {fileID: 416239864}
   dataManager: {fileID: 416239863}
   itemName: {fileID: 1074154141}
   itemID: {fileID: 779028630}
   itemImage: {fileID: 306807164}
   imagePath: {fileID: 525048718}
+  imagePathPlaceholder: {fileID: 146596954}
   catagories: {fileID: 122545670}
   description: {fileID: 110621339}
   scrollView: {fileID: 619307296}
   addPanel: {fileID: 1590923436}
   createButton: {fileID: 2144771520}
+  defaultIcon: {fileID: 2800000, guid: 984045add2d8f17499ab9b6868704c4c, type: 3}
   headerTemplate: {fileID: 9011325579198110942, guid: 585e854d723f67d46bc6ebc1bf37a8c6,
     type: 3}
   fieldTemplate: {fileID: 1085492034013090926, guid: 2b28b696db0abaf42b03bbf245efe974,

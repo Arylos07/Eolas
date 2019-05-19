@@ -20,10 +20,13 @@ public class ItemCreation : MonoBehaviour
 {
     private Item newItem = new Item();
     public string[] allowedImageFiles;
-    private int itemIndex = 0;      //index of item for editing
+    private int itemIndex = -1;      //index of item for editing, -1 disables this, meaning a new item is being made
 
     public List<Stat> newStats = new List<Stat>();
     public static ItemCreation instance;
+    private bool changedImage = false;
+    private bool editingItem = false;
+    private byte[] imageStage;
 
     [Header("Managers")]
     public LoadingManager loadingManager;
@@ -34,11 +37,13 @@ public class ItemCreation : MonoBehaviour
     public InputField itemID;
     public Image itemImage;
     public InputField imagePath;
+    public Text imagePathPlaceholder;
     public InputField catagories;
     public InputField description;
     public Transform scrollView;
     public GameObject addPanel;
     public Button createButton;
+    public Texture2D defaultIcon;
 
     [Header("Templates")]
     public GameObject headerTemplate;
@@ -57,6 +62,7 @@ public class ItemCreation : MonoBehaviour
 
     public void ToggleItemCreation()
     {
+        editingItem = false;
         gameObject.SetActive(!gameObject.activeSelf);
     }
 
@@ -103,11 +109,19 @@ public class ItemCreation : MonoBehaviour
                 }
             }
 
+            if(changedImage == false)
+            {
+                byte[] defaultIconData = ImageConversion.EncodeToPNG(defaultIcon);
+                newItem.imageData = defaultIconData;
+            }
+
             newItem.description = description.text;
             dataManager.CreateItem(newItem);
             LoadingManager.UpdateItems();
             RefreshFields();
+            changedImage = false;
             gameObject.SetActive(false);
+            
         }
         else if(itemIndex != -1)
         {
@@ -117,6 +131,7 @@ public class ItemCreation : MonoBehaviour
 
     public void EditItem(Item item, int index)
     {
+        editingItem = true;
         newItem = item;
         itemIndex = index;
 
@@ -185,6 +200,14 @@ public class ItemCreation : MonoBehaviour
                 newItem.stats.Add(new Stat(stat.statName.text, stat.statValue.text));
             }
         }
+
+
+       if(editingItem == true && changedImage == true)
+        {
+            newItem.imageData = imageStage;
+            imageStage = null;
+        }
+
 
         newItem.description = description.text;
         LoadingManager.openProject.items.Insert(itemIndex, newItem);
@@ -359,12 +382,27 @@ public class ItemCreation : MonoBehaviour
     public void UploadImage()
     {
         byte[] imageData = File.ReadAllBytes(imagePath.text);
-        newItem.imageData = imageData;
 
-        Texture2D texture = new Texture2D(0, 0);
-        ImageConversion.LoadImage(texture, newItem.imageData);
+        if (editingItem == false)
+        {
+            newItem.imageData = imageData;
 
-        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 300.0f);
-        itemImage.sprite = sprite;
+            Texture2D texture = new Texture2D(0, 0);
+            ImageConversion.LoadImage(texture, newItem.imageData);
+
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 300.0f);
+            itemImage.sprite = sprite;
+            changedImage = true;
+        }
+        else if(editingItem == true)
+        {
+            imageStage = imageData;
+            Texture2D texture = new Texture2D(0, 0);
+            ImageConversion.LoadImage(texture, imageStage);
+
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 300.0f);
+            itemImage.sprite = sprite;
+            changedImage = true;
+        }
     }
 }
