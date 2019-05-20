@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
 {
     public static MainMenu instance;
     public Project selectedProject = null;
+    private int open = -1;
 
     [Header("UI")]
     public Text openOrCreateText;
@@ -97,19 +98,58 @@ public class MainMenu : MonoBehaviour
 
     public void OpenOrCreateProject()
     {
-        if(selectedProject == null || selectedProject.projectName == string.Empty)
+        StartCoroutine(_OpenOrCreateProject());
+    }
+
+    public void ContinueOpen(int value)
+    {
+        open = value;
+    }
+
+    IEnumerator _OpenOrCreateProject()
+    {
+        if (selectedProject == null || selectedProject.projectName == string.Empty)
         {
             editorNameField.text = currentEditorName.text;
             ToggleCreationPanel();
         }
         else
         {
-            if(selectedProject.eolasVersion != Application.version)
+            if (selectedProject.eolasVersion != Application.version)
             {
-                print("this project was made in a different version of Eolas than the opened version");
+                versionWarningText.text = "The selected project was made in Eolas version " + selectedProject.eolasVersion + ", which does not match the current version: "
+                    + Application.version + ".\n\nThis may lead to issues with your project; it is recommended to back up your project before opening this project.";
+                versionWarningPanel.SetActive(true);
+
+                Exception("Version Mismatch - selected project version: " + selectedProject.eolasVersion + ", current editor: " + Application.version);
+
+                while(open == -1)
+                {
+                    yield return null;
+                }
+
+                if(open == 1)
+                {
+                    versionWarningPanel.SetActive(false);
+                    OpenProject();
+                }
+                else if(open == 0)
+                {
+                    versionWarningPanel.SetActive(false);
+                }
             }
-            OpenProject();
+            else if(selectedProject.eolasVersion == Application.version)
+            {
+                OpenProject();
+            }
         }
+
+        open = -1;
+    }
+
+    public void ToggleGameObject(GameObject toggleObject)
+    {
+        toggleObject.SetActive(!toggleObject.activeSelf);
     }
 
     public void ToggleCreationPanel()

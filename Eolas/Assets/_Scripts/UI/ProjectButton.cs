@@ -44,7 +44,7 @@ public class ProjectButton : MonoBehaviour
         gameObject.name = project.projectName;
         projectName.text = project.projectName;
         projectEditor.text = project.editorName;
-        projectEditDate.text = project.editDate;
+        projectEditDate.text = project.editDate + " UTC";
     }
 
     public void SelectProject()

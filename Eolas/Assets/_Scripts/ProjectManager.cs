@@ -64,6 +64,16 @@ public class ProjectManager : MonoBehaviour
         LoadingManager.madeChanges = false;
     }
 
+    public static void DeleteProject(Project project, FileStream projectStream)
+    {
+        projectStream.Close();
+        File.Delete(project.projectPath);
+        projectPaths.Remove(project.projectPath);
+        projects.Remove(project);
+        SaveConfig();
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public static void SaveNewProject(string projectName, string projectEditor, string projectPath)
     {
         //Load binary coding and create a file to write to.
