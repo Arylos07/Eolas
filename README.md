@@ -13,8 +13,24 @@ Eolas does not check for differences before reading and does not support merging
 
 At a later date, we plan to add file locking to Eolas, so only certain users can make changes, useful to prevent accidental changes to your project.
 
+# How to use item filtering.
+Item filtering does not have a walkthrough or tooltips added just yet, but here's how you can take advantage of this complex system.
+
+1. Select what you want to filter from the dropdown. Any stats you add to items will be automatically added to this dropdown. 
+2. Enter what you want to search. You can enter names, parts of the descriptions, item ID's, and any stats.
+3. Press "Search". Eolas will begin filtering items. Items will also display how they met your search criteria. Don't forget to press "Reset" to disable the filtering.
+
+# Commands for filtering
+When filtering stats, you have a cool feature when it comes to managing numerical stats. You can search for ranges, less thans, or greater thans. 
+
+- Ranges: Ranges can be searched using "x-y". For example, to see an item with a stat between 1 and 50, enter "1-50" into the search bar when searching. Any items with a numerical value in that stat field will be searched and if they are within that range, they will be displayed as well as display how they met your criteria. 
+
+- Less than: Searching for items who have a stat less than what you're searching for, simply enter ">x" in the search bar. For example, to find any items with a stat less than 50, enter ">50" in the search bar.
+
+- Greater than: Like less than, you can search greater than using "<x", so items with a value greater than 1 can be searched using "<1".
+
 # Installation
-The Eolas executable is found under [the releases page](http://https://github.com/Arylos07/Eolas/releases "the releases page") where you will find installers for Eolas. Select your OS and install. Make sure to run the installers as administrator to associate Eolas projects with Eolas. 
+The Eolas executable is found under [the releases page](http://https://github.com/Arylos07/Eolas/releases "the releases page") where you will find installers for Eolas. Select your OS and install. Make sure to run the installers as administrator to associate Eolas projects with Eolas. You can also clone the installer from the repository.
 
 # Updating
 Updating is simple. When a new version is released, Eolas will notify you. Simply download the new version from the releases page if you would like it and run the installer. The installer will then automatically update Eolas to the newest version.
