@@ -46,7 +46,7 @@ Eolas is released open source to allow developers, designers, and DevOps enginee
 
 Eolas is made using C# and uses the [Unity engine](https://unity3d.com/) as its base and graphical interface. 
 
-To make changes to Eolas, you will need Unity 2019.1.1, although any version later should work. (if not, submit an issue). Versions later than 2018.1 may cause issues. 
+To make changes to Eolas, you will need Unity 2018.3.0f2, although any version later should work. (if not, submit an issue). Versions later than 2018.3 may cause issues. 2019.1+ has a critical bug preventing windowed builds, so until the bug is fully resolved (amongst other bugs), any 2019 version is not recommended.
 
 1. [Download Unity 2018.3.0f2](https://unity3d.com/get-unity/download/archive "Download Unity 2019.3.0f2"). Do not use any 2019 version, as there is a critical bug preventing windowed building.
 2. Create an issue so we can track your progress.
