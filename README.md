@@ -48,7 +48,7 @@ Eolas is made using C# and uses the [Unity engine](https://unity3d.com/) as its 
 
 To make changes to Eolas, you will need Unity 2019.1.1, although any version later should work. (if not, submit an issue). Versions later than 2018.1 may cause issues. 
 
-1. [Download Unity 2019.1.1](https://unity3d.com/get-unity/download/archive "Download Unity 2019.1.1")
+1. [Download Unity 2018.3.0f2](https://unity3d.com/get-unity/download/archive "Download Unity 2019.3.0f2"). Do not use any 2019 version, as there is a critical bug preventing windowed building.
 2. Create an issue so we can track your progress.
 3. Fork the repository
 4. Create a feature branch from master to work in. For example, if you want to add JSON data parsing, make a "json-data" branch from master.
