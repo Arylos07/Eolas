@@ -58,6 +58,11 @@ public class MainMenu : MonoBehaviour
         messageText.text = error;
     }
 
+    public void OpenGithub()
+    {
+        Application.OpenURL("https://github.com/Arylos07/Eolas");
+    }
+
     private void Start()
     {
         ProjectManager.projects.Clear();
