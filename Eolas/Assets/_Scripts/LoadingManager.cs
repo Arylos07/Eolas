@@ -74,17 +74,20 @@ public class LoadingManager : MonoBehaviour
         }
     }
 
-    //public void OnApplicationQuit()
-    //{
-    //    if(close == -1)
-    //    {
-    //        StartCoroutine(_CloseEolas());
-    //    }
-    //    else
-    //    {
-    //        //just quit
-    //    }
-    //}
+    public void OnApplicationQuit()
+    {
+#if !UNITY_EDITOR
+        if (close == -1)
+        {
+            StartCoroutine(_CloseEolas());
+        }
+        else
+        {
+            projectFile.Close();
+            Application.Quit();
+        }
+#endif
+    }
 
     IEnumerator _CloseEolas()
     {

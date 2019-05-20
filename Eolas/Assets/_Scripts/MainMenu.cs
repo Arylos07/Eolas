@@ -226,8 +226,8 @@ public class MainMenu : MonoBehaviour
     }
 
     private void Update()
-    {
-        if(creationPanel.activeSelf == true)
+    { 
+        if (creationPanel.activeSelf == true)
         {
             projectName = projectNameField.text;
             editorName = editorNameField.text;
@@ -254,5 +254,10 @@ public class MainMenu : MonoBehaviour
         {
             createProjectText.text = string.Empty;
         }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
