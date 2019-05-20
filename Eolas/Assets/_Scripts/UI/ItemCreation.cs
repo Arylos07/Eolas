@@ -31,6 +31,7 @@ public class ItemCreation : MonoBehaviour
     [Header("Managers")]
     public LoadingManager loadingManager;
     public DataManager dataManager;
+    public SearchManager searchManager;
 
     [Header("UI")]
     public InputField itemName;
@@ -106,6 +107,11 @@ public class ItemCreation : MonoBehaviour
                 else
                 {
                     newItem.stats.Add(new Stat(stat.statName.text, stat.statValue.text));
+                    if (!searchManager.searchOptions.Contains(stat.statName.text))
+                    {
+                        searchManager.searchOptions.Add(stat.statName.text);
+                        searchManager.UpdateDropdown();
+                    }
                 }
             }
 
@@ -198,6 +204,11 @@ public class ItemCreation : MonoBehaviour
             else
             {
                 newItem.stats.Add(new Stat(stat.statName.text, stat.statValue.text));
+                if (!searchManager.searchOptions.Contains(stat.statName.text))
+                {
+                    searchManager.searchOptions.Add(stat.statName.text);
+                    searchManager.UpdateDropdown();
+                }
             }
         }
 
@@ -225,7 +236,7 @@ public class ItemCreation : MonoBehaviour
         description.text = string.Empty;
         imagePath.text = string.Empty;
         newItem = new Item();
-        RevertStatsToDefault();
+        //RevertStatsToDefault();
     }
 
     public void AddField(bool header)

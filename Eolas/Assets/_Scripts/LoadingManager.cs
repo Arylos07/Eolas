@@ -31,6 +31,7 @@ public class LoadingManager : MonoBehaviour
     [Header("Managers")]
     public DataManager dataManager;
     public ItemCreation itemCreation;
+    public SearchManager searchManager;
 
     [Header("Loading UI")]
     public GameObject loadingPanel;
@@ -227,7 +228,16 @@ public class LoadingManager : MonoBehaviour
                 loadingText.text = "Loading item " + i + "/" + openProject.items.Count + "...";
                 ItemButton itemButton = Instantiate(itemPrefab, itemList).GetComponent<ItemButton>();
 
-                itemButton.item = item;
+                yield return itemButton.item = item;
+
+                foreach (Stat stat in item.stats)
+                {
+                    if (stat.name != "header" && !searchManager.searchOptions.Contains(stat.name))
+                    {
+                        searchManager.searchOptions.Add(stat.name);
+                    }
+                }
+
 
                 loadingBar.fillAmount = ((float)i / (float)openProject.items.Count);
 
@@ -238,7 +248,9 @@ public class LoadingManager : MonoBehaviour
         loadingText.text = "Finishing up...";
         itemCreation.imagePathPlaceholder.text = openProject.projectPath;
         itemCreation.gameObject.SetActive(false);
+        searchManager.UpdateDropdown();
         yield return new WaitForSeconds(1);
+        progressBarParent.SetActive(false);
         loadingPanel.SetActive(false);
     }
 

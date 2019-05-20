@@ -29,6 +29,8 @@ public class MainMenu : MonoBehaviour
     public InputField projectPathField;
     public Transform projectsScrollView;
     public InputField currentEditorName;
+    public GameObject versionWarningPanel;
+    public Text versionWarningText;
 
     [Header("Panels")]
     public GameObject projectsPanel;
@@ -97,6 +99,7 @@ public class MainMenu : MonoBehaviour
     {
         if(selectedProject == null || selectedProject.projectName == string.Empty)
         {
+            editorNameField.text = currentEditorName.text;
             ToggleCreationPanel();
         }
         else

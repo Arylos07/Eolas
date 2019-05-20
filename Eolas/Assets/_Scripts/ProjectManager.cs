@@ -72,7 +72,7 @@ public class ProjectManager : MonoBehaviour
         FileStream fStream = File.Create(formattedPath);
 
         //Create a copy of the SaveManager to get variables to save.
-        Project project = new Project(projectName, formattedPath, DateTime.UtcNow.ToString(), projectEditor);
+        Project project = new Project(projectName, formattedPath, DateTime.UtcNow.ToString(), projectEditor, Application.version);
         project.eolasVersion = Application.version;
 
         projects.Add(project);

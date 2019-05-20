@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 [Serializable]
 public class Project
@@ -33,12 +34,13 @@ public class Project
         editorName = string.Empty;
     }
 
-    public Project(string name, string path, string date, string editor)
+    public Project(string name, string path, string date, string editor, string programversion)
     {
         projectName = name;
         projectPath = path;
         editDate = date;
         editorName = editor;
+        eolasVersion = programversion;
     }
 }
 
