@@ -30,7 +30,7 @@ When filtering stats, you have a cool feature when it comes to managing numerica
 - Greater than: Like less than, you can search greater than using "<x", so items with a value greater than 1 can be searched using "<1".
 
 # Installation
-The Eolas executable is found under [the releases page](http://https://github.com/Arylos07/Eolas/releases "the releases page") where you will find installers for Eolas. Select your OS and install. Make sure to run the installers as administrator to associate Eolas projects with Eolas. You can also clone the installer from the repository.
+The Eolas executable is found under [the releases page](https://github.com/Arylos07/Eolas/releases "the releases page") where you will find installers for Eolas. Select your OS and install. Make sure to run the installers as administrator to associate Eolas projects with Eolas. You can also clone the installer from the repository.
 
 # Updating
 Updating is simple. When a new version is released, Eolas will notify you. Simply download the new version from the releases page if you would like it and run the installer. The installer will then automatically update Eolas to the newest version.
