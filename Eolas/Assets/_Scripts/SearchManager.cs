@@ -17,6 +17,7 @@ public class SearchManager : MonoBehaviour
     public List<Item> searchedItems = new List<Item>();
     public List<string> searchConditions = new List<string>();
     public List<string> searchOptions = new List<string>();
+    private bool allowEnter;
 
     [Header("Managers")]
     public DataManager dataManager;
@@ -28,6 +29,7 @@ public class SearchManager : MonoBehaviour
     public Dropdown searchMode;
     public InputField searchCondition;
     public Button resetButton;
+    public Text conditionText;
 
     [Header("Prefabs")]
     public GameObject itemPrefab;
@@ -49,12 +51,25 @@ public class SearchManager : MonoBehaviour
 
     public void Search()
     {
+        conditionText.text = string.Empty;
+        conditionText.gameObject.SetActive(false);
         foreach (GameObject oldButton in GameObject.FindGameObjectsWithTag("ItemButton"))
         {
             Destroy(oldButton);
         }
 
         StartCoroutine(SearchItems());
+    }
+
+    private void Update()
+    {
+        if (allowEnter && (searchCondition.text.Length > 0) && (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter) || Input.GetButtonDown("Submit")))
+        {
+            Search();
+            allowEnter = false;
+        }
+        else
+            allowEnter = searchCondition.isFocused;
     }
 
     public void ResetItems()
@@ -65,6 +80,8 @@ public class SearchManager : MonoBehaviour
     IEnumerator _ResetItems()
     {
         searchingPanel.SetActive(true);
+        conditionText.text = string.Empty;
+        conditionText.gameObject.SetActive(false);
         searchingText.text = "Reseting...";
 
         foreach (GameObject oldButton in GameObject.FindGameObjectsWithTag("ItemButton"))
@@ -132,6 +149,41 @@ public class SearchManager : MonoBehaviour
                 {
                     searchedItems.Add(item);
                     searchConditions.Add("Description contains " + '"' + searchCondition.text + '"');
+                }
+            }
+        }
+        else if(searchMode.options[searchMode.value].text == "Category")
+        {
+            if (searchCondition.text.Contains(","))
+            {
+                string[] categories = searchCondition.text.Split(',');
+                foreach (string cat in categories)
+                {
+                    cat.Trim();
+                }
+
+                foreach (Item item in LoadingManager.openProject.items)
+                {
+                    foreach (string category in categories)
+                    {
+                        if (item.categories.Contains(category))
+                        {
+                            searchedItems.Add(item);
+                            searchConditions.Add("Catagories contains " + '"' + category + '"');
+                            break;
+                        }
+                    }
+                }
+            }
+            else if(searchCondition.text.Contains(",") != true)
+            {
+                foreach (Item item in LoadingManager.openProject.items)
+                {
+                    if (item.categories.Contains(searchCondition.text))
+                    {
+                        searchedItems.Add(item);
+                        searchConditions.Add("Catagories contains " + '"' + searchCondition.text + '"');
+                    }
                 }
             }
         }
@@ -233,6 +285,12 @@ public class SearchManager : MonoBehaviour
         }
 
         searchingPanel.SetActive(false);
+        if(searchedItems.Count == 0)
+        {
+            conditionText.text = "No items were found where " + searchMode.options[searchMode.value].text + " = " + searchCondition.text + 
+                ".\nYou may need to check your spelling or make sure your items meet the criteria.";
+            conditionText.gameObject.SetActive(true);
+        }
         yield return null;
     }
 }

@@ -234,7 +234,7 @@ public class ItemCreation : MonoBehaviour
         itemID.text = string.Empty;
         catagories.text = string.Empty;
         description.text = string.Empty;
-        imagePath.text = string.Empty;
+        //imagePath.text = string.Empty;
         newItem = new Item();
         //RevertStatsToDefault();
     }

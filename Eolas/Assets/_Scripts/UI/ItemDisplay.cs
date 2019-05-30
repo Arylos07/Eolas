@@ -33,7 +33,7 @@ public class ItemDisplay : MonoBehaviour
     private string catagoryConstructor = string.Empty;
     public Text description;
     public Transform scrollView;
-    public Button editButton;
+    public GameObject deletePanel;
 
     [Header("Templates")]
     public GameObject headerTemplate;
@@ -42,6 +42,15 @@ public class ItemDisplay : MonoBehaviour
     private void Start()
     {
         instance = this;
+    }
+
+    public void DeleteItem()
+    {
+        LoadingManager.openProject.items.Remove(item);
+        LoadingManager.UpdateItems();
+        deletePanel.SetActive(false);
+        CloseDisplay();
+        LoadingManager.madeChanges = true;
     }
 
     public static void DisplayItem(Item displayItem)
