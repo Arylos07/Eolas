@@ -3308,7 +3308,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 65421718}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3612,6 +3612,7 @@ MonoBehaviour:
   searchCondition: {fileID: 1430589761}
   resetButton: {fileID: 1600286662}
   conditionText: {fileID: 1595144588}
+  sortDropdown: {fileID: 1592315477}
   itemPrefab: {fileID: 1080921807498211560, guid: e1f338a0af068b04e832325478ea216e,
     type: 3}
   itemList: {fileID: 582269859}
@@ -5322,7 +5323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000015932352}
+  m_AnchoredPosition: {x: 0, y: -0.0000004342531}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &582269860
@@ -5840,7 +5841,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000034096433, y: 0.000024133293}
+  m_AnchoredPosition: {x: -0.000029362154, y: 0.000033747474}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &619307297
@@ -8381,7 +8382,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 572053367}
   m_HandleRect: {fileID: 572053366}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -30,6 +30,7 @@ public class SearchManager : MonoBehaviour
     public InputField searchCondition;
     public Button resetButton;
     public Text conditionText;
+    public GameObject sortDropdown;
 
     [Header("Prefabs")]
     public GameObject itemPrefab;
@@ -98,7 +99,7 @@ public class SearchManager : MonoBehaviour
         }
 
         searchCondition.text = string.Empty;
-
+        sortDropdown.SetActive(true);
         searchingPanel.SetActive(false);
         yield return null;
 
@@ -112,6 +113,7 @@ public class SearchManager : MonoBehaviour
         searchedItems.Clear();
         searchingText.text = "Starting search...";
         searchingPanel.SetActive(true);
+        sortDropdown.SetActive(false);
         yield return new WaitForSeconds(0.5f);
 
         foreach (GameObject oldButton in GameObject.FindGameObjectsWithTag("ItemButton"))
@@ -124,7 +126,7 @@ public class SearchManager : MonoBehaviour
         {
             foreach (Item item in LoadingManager.openProject.items)
             {
-                if (item.itemName.Contains(searchCondition.text.ToLower()))
+                if (item.itemName.ToLower().Contains(searchCondition.text.ToLower()))
                 {
                     searchedItems.Add(item);
                 }
@@ -145,7 +147,7 @@ public class SearchManager : MonoBehaviour
         {
             foreach (Item item in LoadingManager.openProject.items)
             {
-                if (item.description.Contains(searchCondition.text.ToLower()))
+                if (item.description.ToLower().Contains(searchCondition.text.ToLower()))
                 {
                     searchedItems.Add(item);
                     searchConditions.Add("Description contains " + '"' + searchCondition.text + '"');
@@ -175,7 +177,7 @@ public class SearchManager : MonoBehaviour
                     }
                 }
             }
-            else if(searchCondition.text.Contains(",") != true)
+            else if(searchCondition.text.Contains(",") == false)
             {
                 foreach (Item item in LoadingManager.openProject.items)
                 {
@@ -212,7 +214,7 @@ public class SearchManager : MonoBehaviour
                 searchCondition.text.Replace(" ", string.Empty);
                 statCondition = searchCondition.text.Split('<');
                 singleComparison = int.Parse(statCondition[1]);
-                comparison = ">";
+                comparison = "<";
             }
             else
             {
@@ -225,7 +227,7 @@ public class SearchManager : MonoBehaviour
             {
                 foreach (Stat stat in item.stats)
                 {
-                    if (stat.name.ToLower() == searchMode.options[searchMode.value].text)
+                    if (stat.name.ToLower() == searchMode.options[searchMode.value].text.ToLower())
                     {
                         int value = int.Parse(stat.value);
 
@@ -287,7 +289,7 @@ public class SearchManager : MonoBehaviour
         searchingPanel.SetActive(false);
         if(searchedItems.Count == 0)
         {
-            conditionText.text = "No items were found where " + searchMode.options[searchMode.value].text + " = " + searchCondition.text + 
+            conditionText.text = "No items were found where " + searchMode.options[searchMode.value].text + " contains " + searchCondition.text + 
                 ".\nYou may need to check your spelling or make sure your items meet the criteria.";
             conditionText.gameObject.SetActive(true);
         }
