@@ -207,7 +207,7 @@ public class LoadingManager : MonoBehaviour
         //delays are to allow any other behaviours time to reference anything from this function as well as display to user the progress of loading.
 
         loadingText.text = "Loading Project " + openProject.projectName + "...";
-        projectFile = new FileStream(openProject.projectPath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);    //lock file to prevent corruption
+        projectFile = new FileStream(openProject.projectPath, FileMode.Open, FileAccess.ReadWrite);
         currentSave = openProject;
         dataManager.projectTitle.text = openProject.projectName;
         yield return new WaitForSeconds(1);
