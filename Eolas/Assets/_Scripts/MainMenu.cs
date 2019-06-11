@@ -179,6 +179,34 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    public void LoadProject(string path)
+    {
+        StartCoroutine(_LoadProject(path));
+    }
+
+    public IEnumerator _LoadProject(string path)
+    {
+        ProjectManager.LoadConfig(false);
+
+        yield return new WaitForSeconds(1);
+
+        selectedProject = ProjectManager.LoadProjectFile(path);
+
+        SaveConfig();
+
+        if (editorNameField.text == string.Empty)
+        {
+            editorNameField.text = System.Environment.MachineName;    //get computer's name if loading directly from file and no config is loaded
+        }
+
+        OpenOrCreateProject();
+
+        if(selectedProject.eolasVersion != Application.version)
+        {
+            CommandLine.instance.initPanel.SetActive(false);
+        }
+    }
+
     public void CreateNewProject()
     {
         ProjectManager.SaveNewProject(projectName, editorName, projectPath);

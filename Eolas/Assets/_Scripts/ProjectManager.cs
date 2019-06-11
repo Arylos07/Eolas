@@ -29,8 +29,8 @@ public class ProjectManager : MonoBehaviour
     public static void SaveConfig()
     {
         //Load binary coding and create a file to write to.
-        BinaryFormatter binary = new BinaryFormatter();
-        FileStream fStream = File.Create(documentsPath + "/config.conf");
+        //BinaryFormatter binary = new BinaryFormatter();
+        //FileStream fStream = File.Create(documentsPath + "/config.conf");
 
         //Create a copy of the SaveManager to get variables to save.
         Config config = new Config();
@@ -44,12 +44,16 @@ public class ProjectManager : MonoBehaviour
 
         config.editorName = editorName;
 
+        string configString = JsonMapper.ToJson(config);
+
+        File.WriteAllText(documentsPath + "/config.conf", configString);
+
         //Add other variables if needed...
 
         //Encrypt information
-        binary.Serialize(fStream, config);
+        //binary.Serialize(fStream, config);
         //Close file.
-        fStream.Close();
+        //fStream.Close();
     }
 
     public static void SaveProject(Project project, FileStream projectStream)
@@ -113,7 +117,10 @@ public class ProjectManager : MonoBehaviour
 
             //Take decrypted variables and add them to the GameController so rules can be adjusted accordingly.
             project.projectPath = path;
-            projects.Add(project);
+            if (projects.Contains(project) == false)
+            {
+                projects.Add(project);
+            }
 
             return project;
         }
@@ -166,12 +173,14 @@ public class ProjectManager : MonoBehaviour
         if (File.Exists(documentsPath + "/config.conf"))
         {
             //Load binary formatter and open the file. Decrypt the file and close it.
-            BinaryFormatter binary = new BinaryFormatter();
-            FileStream fStream = File.Open(documentsPath + "/config.conf", FileMode.Open);
-            Config config = (Config)binary.Deserialize(fStream);
-            fStream.Close();
+            //BinaryFormatter binary = new BinaryFormatter();
+            //FileStream fStream = File.Open(documentsPath + "/config.conf", FileMode.Open);
+            //Config config = (Config)binary.Deserialize(fStream);
+            //fStream.Close();
 
             //Take decrypted variables and add them to the GameController so rules can be adjusted accordingly.
+
+            Config config = JsonMapper.ToObject<Config>(File.ReadAllText(documentsPath + "/config.conf"));
 
             projectPaths = config.projectPaths;
 
@@ -182,9 +191,31 @@ public class ProjectManager : MonoBehaviour
             LoadProjectFile(projectPaths);
         }
     }
+
+    public static void LoadConfig(bool reloadProjects)
+    {
+        //Only load if there is an existing file.
+        if (File.Exists(documentsPath + "/config.conf"))
+        {
+            //Load binary formatter and open the file. Decrypt the file and close it.
+            //BinaryFormatter binary = new BinaryFormatter();
+            //FileStream fStream = File.Open(documentsPath + "/config.conf", FileMode.Open);
+            //Config config = (Config)binary.Deserialize(fStream);
+            //fStream.Close();
+
+            //Take decrypted variables and add them to the GameController so rules can be adjusted accordingly.
+
+            Config config = JsonMapper.ToObject<Config>(File.ReadAllText(documentsPath + "/config.conf"));
+
+            projectPaths = config.projectPaths;
+
+            editorName = config.editorName;
+
+            //Add other variables if needed...
+        }
+    }
 }
 
-[Serializable]
 public class Config
 {
     public List<string> projectPaths = new List<string>();

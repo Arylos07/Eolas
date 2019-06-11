@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System;
 using System.Linq;
+using LitJson;
 
 public class LoadingManager : MonoBehaviour
 {
