@@ -84,7 +84,7 @@ public class LoadingManager : MonoBehaviour
         }
         else
         {
-            projectFile.Close();
+            //projectFile.Close();
             Application.Quit();
         }
 #endif
