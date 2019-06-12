@@ -118,7 +118,7 @@ public class ItemCreation : MonoBehaviour
             if(changedImage == false)
             {
                 byte[] defaultIconData = ImageConversion.EncodeToPNG(defaultIcon);
-                newItem.imageData = defaultIconData;
+                newItem.imageData = DataCompression.Compress(defaultIconData);
             }
 
             newItem.description = description.text;
@@ -144,7 +144,7 @@ public class ItemCreation : MonoBehaviour
         itemName.text = item.itemName;
         itemID.text = item.itemID;
 
-        byte[] imageData = item.imageData;
+        byte[] imageData = DataCompression.Decompress(item.imageData);
 
         Texture2D texture = new Texture2D(0, 0);
         ImageConversion.LoadImage(texture, imageData);
@@ -215,7 +215,7 @@ public class ItemCreation : MonoBehaviour
 
        if(editingItem == true && changedImage == true)
         {
-            newItem.imageData = imageStage;
+            newItem.imageData = DataCompression.Compress(imageStage);
             imageStage = null;
         }
 
@@ -396,7 +396,9 @@ public class ItemCreation : MonoBehaviour
 
         if (editingItem == false)
         {
-            newItem.imageData = imageData;
+            byte[] compressedData = DataCompression.Compress(imageData);
+
+            newItem.imageData = compressedData;
 
             Texture2D texture = new Texture2D(0, 0);
             ImageConversion.LoadImage(texture, newItem.imageData);

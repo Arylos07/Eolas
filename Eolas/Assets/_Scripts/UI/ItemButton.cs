@@ -26,7 +26,7 @@ public class ItemButton : MonoBehaviour
         gameObject.name = item.itemName;
         itemName.text = item.itemName;
         Texture2D texture = new Texture2D(1, 1);
-        ImageConversion.LoadImage(texture, item.imageData);
+        ImageConversion.LoadImage(texture, DataCompression.Decompress(item.imageData));
 
         Sprite sprite = null;
         sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
@@ -38,7 +38,7 @@ public class ItemButton : MonoBehaviour
         yield return gameObject.name = item.itemName;
         yield return itemName.text = item.itemName;
         Texture2D texture = new Texture2D(1, 1);
-        yield return ImageConversion.LoadImage(texture, item.imageData);
+        yield return ImageConversion.LoadImage(texture, DataCompression.Decompress(item.imageData));
 
         Sprite sprite = null;
         yield return sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
