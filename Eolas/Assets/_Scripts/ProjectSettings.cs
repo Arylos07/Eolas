@@ -31,6 +31,6 @@ public class ProjectSettings : MonoBehaviour
 
     public void DeleteProject()
     {
-        ProjectManager.DeleteProject(LoadingManager.openProject, LoadingManager.projectFile);
+        ProjectManager.DeleteProject(LoadingManager.openProject);
     }
 }

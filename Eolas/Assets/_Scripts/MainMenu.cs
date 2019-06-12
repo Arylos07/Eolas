@@ -14,6 +14,7 @@ using UnityEngine.UI;
 using System.IO;
 using System;
 using Crosstales.FB;
+using System.Text.RegularExpressions;
 
 public class MainMenu : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class MainMenu : MonoBehaviour
     public InputField currentEditorName;
     public GameObject versionWarningPanel;
     public Text versionWarningText;
+    public Text aboutTextObject;
 
     [Header("Panels")]
     public GameObject projectsPanel;
@@ -70,6 +72,12 @@ public class MainMenu : MonoBehaviour
         projectPathField.text = projectPath;
         ProjectManager.InitDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Eolas\\Projects");
         instance = this;
+
+        string init = aboutTextObject.text;
+
+        init = init.Replace("$version", Application.version);
+
+        aboutTextObject.text = init;
     }
 
     public void OpenProject()
@@ -176,6 +184,36 @@ public class MainMenu : MonoBehaviour
             selectedProject = ProjectManager.LoadProjectFile(path);
             SaveConfig();
             ShowProjectButtons();
+        }
+    }
+
+    public void LoadProject(string path)
+    {
+        StartCoroutine(_LoadProject(path));
+    }
+
+    public IEnumerator _LoadProject(string path)
+    {
+        ProjectManager.LoadConfig(false);
+
+        yield return new WaitForSeconds(1);
+
+        currentEditorName.text = ProjectManager.editorName;
+
+        selectedProject = ProjectManager.LoadProjectFile(path);
+
+        SaveConfig();
+
+        if (editorNameField.text == string.Empty)
+        {
+            editorNameField.text = System.Environment.MachineName;    //get computer's name if loading directly from file and no config is loaded
+        }
+
+        OpenOrCreateProject();
+
+        if(selectedProject.eolasVersion != Application.version)
+        {
+            CommandLine.instance.initPanel.SetActive(false);
         }
     }
 

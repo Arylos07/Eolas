@@ -396,7 +396,9 @@ public class ItemCreation : MonoBehaviour
 
         if (editingItem == false)
         {
-            newItem.imageData = imageData;
+            byte[] compressedData = imageData;
+
+            newItem.imageData = compressedData;
 
             Texture2D texture = new Texture2D(0, 0);
             ImageConversion.LoadImage(texture, newItem.imageData);
