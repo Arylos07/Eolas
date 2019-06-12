@@ -190,6 +190,8 @@ public class MainMenu : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
+        currentEditorName.text = ProjectManager.editorName;
+
         selectedProject = ProjectManager.LoadProjectFile(path);
 
         SaveConfig();
