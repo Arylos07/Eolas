@@ -119,7 +119,7 @@ public class ItemDisplay : MonoBehaviour
             itemID.gameObject.SetActive(false);
         }
 
-        byte[] imageData = DataCompression.Decompress(item.imageData);
+        byte[] imageData = item.imageData;
 
         Texture2D texture = new Texture2D(0, 0);
         ImageConversion.LoadImage(texture, imageData);
