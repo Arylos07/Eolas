@@ -21,7 +21,7 @@ public class LoadingManager : MonoBehaviour
 {
     public static Project openProject;
     public static string editorName;
-    public static FileStream projectFile;
+    //public static FileStream projectFile;
 
     public static bool madeChanges = false;
     public static LoadingManager instance;
@@ -105,13 +105,13 @@ public class LoadingManager : MonoBehaviour
             if (close == 2)
             {
                 RequestSave();
-                projectFile.Close();
+                //projectFile.Close();
                 Application.Quit();
             }
             else if (close == 1)
             {
                 //discard and close
-                projectFile.Close();
+                //projectFile.Close();
                 Application.Quit();
             }
             else if (close == 0)
@@ -123,7 +123,7 @@ public class LoadingManager : MonoBehaviour
         }
         else
         {
-            projectFile.Close();
+            //projectFile.Close();
             Application.Quit();
         }
     }
@@ -149,13 +149,13 @@ public class LoadingManager : MonoBehaviour
             {
                 //save and close
                 RequestSave();
-                projectFile.Close();
+                //projectFile.Close();
                 UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
             }
             else if (close == 1)
             {
                 //discard and close
-                projectFile.Close();
+                //projectFile.Close();
                 UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
             }
             else if (close == 0)
@@ -169,7 +169,7 @@ public class LoadingManager : MonoBehaviour
         else
         {
             RequestSave();
-            projectFile.Close();
+            //projectFile.Close();
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
         }
 
@@ -208,7 +208,7 @@ public class LoadingManager : MonoBehaviour
         //delays are to allow any other behaviours time to reference anything from this function as well as display to user the progress of loading.
 
         loadingText.text = "Loading Project " + openProject.projectName + "...";
-        projectFile = new FileStream(openProject.projectPath, FileMode.Open, FileAccess.ReadWrite);
+        //projectFile = new FileStream(openProject.projectPath, FileMode.Open, FileAccess.ReadWrite);
         currentSave = openProject;
         dataManager.projectTitle.text = openProject.projectName;
         yield return new WaitForSeconds(1);
@@ -260,6 +260,6 @@ public class LoadingManager : MonoBehaviour
 
     public static void RequestSave()
     {
-        ProjectManager.SaveProject(openProject, projectFile);
+        ProjectManager.SaveProject(openProject);
     }
 }

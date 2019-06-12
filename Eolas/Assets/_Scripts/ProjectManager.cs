@@ -56,21 +56,25 @@ public class ProjectManager : MonoBehaviour
         //fStream.Close();
     }
 
-    public static void SaveProject(Project project, FileStream projectStream)
+    public static void SaveProject(Project project)
     {
-        BinaryFormatter binary = new BinaryFormatter();
+        //BinaryFormatter binary = new BinaryFormatter();
 
         project.editDate = DateTime.UtcNow.ToString();
         project.editorName = editorName;
         project.eolasVersion = Application.version;
 
-        binary.Serialize(projectStream, project);
+        string projectData = JsonMapper.ToJson(project);
+
+        File.WriteAllText(project.projectPath, projectData);
+
+        //binary.Serialize(projectStream, project);
         LoadingManager.madeChanges = false;
     }
 
-    public static void DeleteProject(Project project, FileStream projectStream)
+    public static void DeleteProject(Project project)
     {
-        projectStream.Close();
+        //projectStream.Close();
         File.Delete(project.projectPath);
         projectPaths.Remove(project.projectPath);
         projects.Remove(project);
@@ -81,9 +85,9 @@ public class ProjectManager : MonoBehaviour
     public static void SaveNewProject(string projectName, string projectEditor, string projectPath)
     {
         //Load binary coding and create a file to write to.
-        BinaryFormatter binary = new BinaryFormatter();
+        //BinaryFormatter binary = new BinaryFormatter();
         string formattedPath = projectPath + "\\" + projectName + ".eolas";
-        FileStream fStream = File.Create(formattedPath);
+        //FileStream fStream = File.Create(formattedPath);
 
         //Create a copy of the SaveManager to get variables to save.
         Project project = new Project(projectName, formattedPath, DateTime.UtcNow.ToString(), projectEditor, Application.version);
@@ -97,9 +101,13 @@ public class ProjectManager : MonoBehaviour
         //Add other variables if needed...
 
         //Encrypt information
-        binary.Serialize(fStream, project);
+        //binary.Serialize(fStream, project);
         //Close file.
-        fStream.Close();
+        //fStream.Close();
+
+        string newProject = JsonMapper.ToJson(project);
+
+        File.WriteAllText(project.projectPath, newProject);
 
         MainMenu.instance.ToggleCreationPanel();
         SaveConfig();
@@ -110,10 +118,12 @@ public class ProjectManager : MonoBehaviour
         if (File.Exists(path))
         {
             //Load binary formatter and open the file. Decrypt the file and close it.
-            BinaryFormatter binary = new BinaryFormatter();
-            FileStream fStream = File.Open(path, FileMode.Open);
-            Project project = (Project)binary.Deserialize(fStream);
-            fStream.Close();
+            //BinaryFormatter binary = new BinaryFormatter();
+            //FileStream fStream = File.Open(path, FileMode.Open);
+            //Project project = (Project)binary.Deserialize(fStream);
+            //fStream.Close();
+
+            Project project = JsonMapper.ToObject<Project>(File.ReadAllText(path));
 
             //Take decrypted variables and add them to the GameController so rules can be adjusted accordingly.
             project.projectPath = path;
