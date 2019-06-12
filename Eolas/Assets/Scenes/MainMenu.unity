@@ -544,7 +544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000020411157}
+  m_AnchoredPosition: {x: 0, y: -0.000007625318}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &157868859
@@ -4833,6 +4833,7 @@ MonoBehaviour:
   currentEditorName: {fileID: 988733248}
   versionWarningPanel: {fileID: 1031451332}
   versionWarningText: {fileID: 1024301178}
+  aboutTextObject: {fileID: 2020687951}
   projectsPanel: {fileID: 81057882}
   buttonsPanel: {fileID: 500626399}
   creationPanel: {fileID: 1418759551}
@@ -6644,7 +6645,7 @@ MonoBehaviour:
   m_Text: 'Developed and programmed by Michael Cox
 
 
-    Eolas version: 0.84
+    Eolas version: $version
 
 
     Want to add a feature of your own or make a custom version for your project? Feel
